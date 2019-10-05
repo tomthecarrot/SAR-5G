@@ -5,9 +5,7 @@ using Teleportal;
 
 public class SlimeRaycaster : MonoBehaviour
 {
-    void Start() {
-        
-    }
+    public float RaycastDistance = 3f; // meters
 
     void Update() {
         if (SlimeManager.Shared.iAmGod) {
@@ -16,7 +14,7 @@ public class SlimeRaycaster : MonoBehaviour
 
         RaycastHit hit;
         Transform t = TPUser.SelfUser.transform;
-        if (Physics.Raycast(t.position, transform.TransformDirection(t.forward), out hit, Mathf.Infinity)) {
+        if (Physics.Raycast(t.position, transform.TransformDirection(t.forward), out hit, this.RaycastDistance)) {
             Debug.Log(hit.transform.gameObject.name);
             if (hit.transform.gameObject.name == "Voxel Cube") {
                 Voxel v = hit.transform.gameObject.GetComponent<Voxel>();
