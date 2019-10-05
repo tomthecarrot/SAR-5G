@@ -10,6 +10,7 @@ public class Voxel : MonoBehaviour
 
     void Awake() {
         this.renderer = this.GetComponent<MeshRenderer>();
+        this.renderer.enabled = false;
     }
 
     void Start() {

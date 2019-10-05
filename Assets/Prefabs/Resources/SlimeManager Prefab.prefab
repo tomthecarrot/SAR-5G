@@ -43,3 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1b66c6c617e8460fb92b3c480bb2d64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  VoxelTPO: {fileID: 4305596408726664225, guid: 2fc851f22b6e64eb49a16689f0319078,
+    type: 3}
+  GodUser: NULL
