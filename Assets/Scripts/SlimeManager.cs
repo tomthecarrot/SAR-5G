@@ -9,7 +9,7 @@ public class SlimeManager : MonoBehaviour
     public GameObject VoxelTPO;
     public string GodUser = "NULL";
     public bool iAmGod = false;
-    private TPObject tpo;
+    public TPObject tpo;
 
     void Awake() {
         SlimeManager.Shared = this;
