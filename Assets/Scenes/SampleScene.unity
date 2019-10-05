@@ -288,6 +288,11 @@ PrefabInstance:
       propertyPath: realm
       value: slime_1
       objectReference: {fileID: 0}
+    - target: {fileID: 5961783725416476496, guid: 65c7896c4b429a94ea753421747fa5b6,
+        type: 3}
+      propertyPath: m_PoseSource
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 655141430, guid: 65c7896c4b429a94ea753421747fa5b6, type: 3}
       propertyPath: m_IsActive
       value: 0
