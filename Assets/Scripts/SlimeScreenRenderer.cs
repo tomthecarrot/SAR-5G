@@ -25,14 +25,11 @@ public class SlimeScreenRenderer : MonoBehaviour {
             return;
         }
 
-        this.tpo = TPObject.get(tpu);
-        this.tpo.Subscribe("cam", delegate (string byteStr) {
-            byte[] bytes = SlimeScreenCapture.StringToByteArray(byteStr);
-            Texture2D tex = new Texture2D(100, 100, TextureFormat.ARGB32, false);
-            tex.LoadRawTextureData(bytes);
-            tex.Apply();
-            viz.texture = tex;
-        });
+        SlimeManager.Shared.AddScreen(tpu.GetUsername(), this);
+    }
+
+    public void SetTexture(Texture2D newTexture) {
+        this.viz.texture = newTexture;
     }
 
 }

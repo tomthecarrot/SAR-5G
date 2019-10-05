@@ -16,7 +16,7 @@ public class SlimeScreenCapture : MonoBehaviour {
     private RenderTexture renderTexture;
 
     IEnumerator Start() {
-        while (!Teleportal.Teleportal.tp.IsConnected()) {
+        while (!Teleportal.Teleportal.tp.IsConnected() || !Teleportal.AuthModule.Shared.IsAuthed()) {
             // Wait for connection
             yield return new WaitForSeconds(0.2f);
         }
@@ -72,7 +72,7 @@ public class SlimeScreenCapture : MonoBehaviour {
     }
 
     private IEnumerator SetStateIE(string hexStr) {
-        SlimeManager.Shared.tpo.SetState("cam", Teleportal.Teleportal.tp.GetUsername() + ";" + hexStr);
+        SlimeManager.Shared.tpo.SetState("cam", Teleportal.Teleportal.tp.GetUsername() + ":" + hexStr);
 
         /*
         TPObject tpo = TPUser.SelfUser.GetObject();

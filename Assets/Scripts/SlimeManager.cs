@@ -11,13 +11,33 @@ public class SlimeManager : MonoBehaviour
     public bool iAmGod = false;
     public TPObject tpo;
 
+    private Dictionary<string, SlimeScreenRenderer> screens;
+
     void Awake() {
         SlimeManager.Shared = this;
+        this.screens = new Dictionary<string, SlimeScreenRenderer>();
     }
 
     void Start() {
         this.tpo = TPObject.get(this.transform.parent.gameObject);
         this.tpo.Subscribe("god", this.OnSetGod);
+        this.tpo.Subscribe("cam", delegate (string value) {
+            string[] components = value.Split(':');
+            string user = components[0];
+            string byteStr = components[1];
+            byte[] bytes = SlimeScreenCapture.StringToByteArray(byteStr);
+            Texture2D tex = new Texture2D(100, 100, TextureFormat.ARGB32, false);
+            tex.LoadRawTextureData(bytes);
+            tex.Apply();
+            if (screens.ContainsKey(user)) {
+                screens[user].SetTexture(tex);
+            }
+            // viz.texture = tex;
+        });
+    }
+
+    public void AddScreen(string username, SlimeScreenRenderer screen) {
+        this.screens.Add(username, screen);
     }
 
     private void OnSetGod(string newGod) {
