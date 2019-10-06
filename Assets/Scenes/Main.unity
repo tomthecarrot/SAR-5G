@@ -447,6 +447,16 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2519822592544124928, guid: 5374d05b504cf5c4ab6f1de1c1294711,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 694304337}
+    - target: {fileID: 2519822592544124928, guid: 5374d05b504cf5c4ab6f1de1c1294711,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleGod
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5374d05b504cf5c4ab6f1de1c1294711, type: 3}
 --- !u!224 &129832493 stripped
@@ -589,6 +599,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 479019677}
   m_CullTransparentMesh: 0
+--- !u!114 &694304337 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 395714533685776858, guid: dcce61e9cd07e49968789c2ee8d204e5,
+    type: 3}
+  m_PrefabInstance: {fileID: 3453362913363789619}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1b66c6c617e8460fb92b3c480bb2d64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,6 +868,11 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 552360816910972918, guid: cc294e6ca974110488ec464b8ff70490,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 694304337}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc294e6ca974110488ec464b8ff70490, type: 3}
 --- !u!1001 &874439718
@@ -1197,7 +1224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d92120de03a2e4816b8dd8ce5eb6beae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NetworkInterval: 0.5
+  NetworkInterval: 0.1
   screenTxEnabled: 0
   screenRxEnabled: 0
   width: 100
