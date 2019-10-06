@@ -24,7 +24,8 @@ public class SlimeManager : MonoBehaviour
         this.tpo.Subscribe("cam", delegate (string value) {
             string[] components = value.Split(':');
             string user = components[0];
-            if (user == Teleportal.Teleportal.tp.GetUsername()) {
+            if (!SlimeScreenCapture.Shared.screenRxEnabled
+                || user == Teleportal.Teleportal.tp.GetUsername()) {
                 return;
             }
             string byteStr = components[1];

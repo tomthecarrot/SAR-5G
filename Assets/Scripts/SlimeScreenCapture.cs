@@ -15,6 +15,9 @@ public class SlimeScreenCapture : MonoBehaviour {
     public float NetworkInterval = 1f;
     public static SlimeScreenCapture Shared;
 
+    public bool screenTxEnabled;
+    public bool screenRxEnabled;
+
     public int width = 100;
     public int height = 100;
     public int divisions = 10;
@@ -27,6 +30,26 @@ public class SlimeScreenCapture : MonoBehaviour {
 
     void Awake() {
         SlimeScreenCapture.Shared = this;
+    }
+
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            this.screenRxEnabled = !this.screenRxEnabled;
+            this.screenTxEnabled = this.screenRxEnabled;
+        }
+    }
+
+    public void EnableScreenTxRx(bool newValue) {
+        this.EnableScreenTx(newValue);
+        this.EnableScreenRx(newValue);
+    }
+
+    public void EnableScreenTx(bool newValue) {
+        this.screenTxEnabled = newValue;
+    }
+
+    public void EnableScreenRx(bool newValue) {
+        this.screenRxEnabled = newValue;
     }
 
     IEnumerator Start() {
@@ -43,6 +66,13 @@ public class SlimeScreenCapture : MonoBehaviour {
         }
 
         while (Teleportal.Teleportal.tp.IsConnected()) {
+            // Wait for the specified delay
+            yield return new WaitForSeconds(this.NetworkInterval);
+            
+            if (!this.screenTxEnabled) {
+                continue;
+            }
+
             // Read screen image into render texture
             this.renderTexture = new RenderTexture(this.width, this.height, 0, RenderTextureFormat.ARGB32);
             ScreenCapture.CaptureScreenshotIntoRenderTexture(this.renderTexture);
@@ -77,9 +107,6 @@ public class SlimeScreenCapture : MonoBehaviour {
 
             Thread t = new Thread(this.ByteArrayToString);
             t.Start(null);//ba);
-            
-            // Wait for the specified delay
-            yield return new WaitForSeconds(this.NetworkInterval);
         }
     }
 
