@@ -22,14 +22,20 @@ public class SlimeScreenCapture : MonoBehaviour {
     public int height = 100;
     public int divisions = 10;
     public float divisionInterval = 0.01f;
+    private Camera camera;
     private RenderTexture renderTexture;
     private Texture2D t2d;
+    private Rect camRect;
+    private Rect scaledRect;
     private Rect rectRead;
     private List<byte[]> byteArrs;
     private int byteArrLen;
+    public FilterMode filterMode = FilterMode.Bilinear;
 
     void Awake() {
         SlimeScreenCapture.Shared = this;
+        this.camera = this.gameObject.GetComponent<Camera>();
+        this.scaledRect = new Rect(0, 0, 0.1f, 0.1f);
     }
 
     void Update() {
@@ -52,6 +58,22 @@ public class SlimeScreenCapture : MonoBehaviour {
         this.screenRxEnabled = newValue;
     }
 
+    // void OnPreRender () {
+    //     this.camRect = this.camera.rect;
+    //     // this.scaledRect.Set(this.rectRead.x, this.rectRead.y, this.rectRead.width, this.rectRead.height);
+    //     this.camera.rect = this.scaledRect;
+
+    //     // Read screen image into render texture
+    //     this.renderTexture = new RenderTexture(this.width, this.height, 0, RenderTextureFormat.ARGB32);
+    //     ScreenCapture.CaptureScreenshotIntoRenderTexture(this.renderTexture);
+    // }
+
+    // void OnRenderImage (RenderTexture src, RenderTexture dest) {
+    //     this.camera.rect = this.camRect;
+    //     src.filterMode = this.filterMode;
+    //     Graphics.Blit(src, dest);
+    // }
+
     IEnumerator Start() {
         // this.width = Screen.width;
         // this.height = Screen.height;
@@ -70,9 +92,13 @@ public class SlimeScreenCapture : MonoBehaviour {
             yield return new WaitForSeconds(this.NetworkInterval);
             
             if (!this.screenTxEnabled) {
+                Debug.Log("disabled :/");
                 continue;
             }
 
+            yield return new WaitForEndOfFrame();
+            Debug.Log("end of frame reached");
+            
             // Read screen image into render texture
             this.renderTexture = new RenderTexture(this.width, this.height, 0, RenderTextureFormat.ARGB32);
             ScreenCapture.CaptureScreenshotIntoRenderTexture(this.renderTexture);
@@ -86,13 +112,12 @@ public class SlimeScreenCapture : MonoBehaviour {
             this.byteArrLen = 0;
 
             for (int i = 0; i < divisions; i++) {
-                yield return new WaitForEndOfFrame();
-
                 int x = divWidth * i;
                 int y = divHeight * i;
                 Debug.LogFormat("width_height {0} {1} x_y {2} {3}", width, height, x, y);
                 this.t2d = new Texture2D(divWidth, divHeight, TextureFormat.ARGB32, false);
                 this.rectRead = new Rect(x, y, divWidth, divHeight);
+                Debug.Log(Camera.main.rect);
                 this.t2d.ReadPixels(this.rectRead, 0, 0);
                 // this.t2d.Compress(false);
                 this.t2d.Apply();
