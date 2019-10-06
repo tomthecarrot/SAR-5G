@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Teleportal;
 
 public class SlimeManager : MonoBehaviour
@@ -25,12 +26,14 @@ public class SlimeManager : MonoBehaviour
             string[] components = value.Split(':');
             string user = components[0];
             if (!SlimeScreenCapture.Shared.screenRxEnabled
+                || !this.iAmGod // TODO remove this line to enable floating screens (also see TPUser prefab)
                 || user == Teleportal.Teleportal.tp.GetUsername()) {
                 return;
             }
-            string byteStr = components[1];
-            
-            StartCoroutine(ShowC(user, byteStr));
+            if (screens.ContainsKey(user)) {
+                string byteStr = components[1];
+                StartCoroutine(ShowC(user, byteStr));
+            }
         });
     }
 
@@ -64,6 +67,7 @@ public class SlimeManager : MonoBehaviour
         // Update UI
         this.iAmGod = (newGod == Teleportal.Teleportal.tp.GetUsername());
         GodModeUI.Shared.gameObject.SetActive(this.iAmGod);
+        SlugModeUI.Shared.gameObject.SetActive(!this.iAmGod);
 
         if (GodIndicator.Shared != null) {
             GodIndicator.Shared.gameObject.SetActive(this.iAmGod);

@@ -13,13 +13,19 @@ public class SlimeScreenRenderer : MonoBehaviour {
     private TPObject tpo;
     private RawImage viz;
     private float NetworkInterval = 1f;
+    public bool IsStandalone = false;
+    public string StandaloneName = "";
 
     void Awake() {
         this.viz = this.gameObject.GetComponent<RawImage>();
     }
 
     void Start() {
-        this.DelayThenAdd();
+        if (this.IsStandalone) {
+            SlimeManager.Shared.AddScreen(this.StandaloneName, this);
+        } else {
+            this.DelayThenAdd();
+        }
     }
 
     private async void DelayThenAdd() {
@@ -32,7 +38,8 @@ public class SlimeScreenRenderer : MonoBehaviour {
 
         await Task.Delay(2000);
 
-        SlimeManager.Shared.AddScreen(tpu.GetUsername(), this);
+        string username = tpu.GetUsername();
+        SlimeManager.Shared.AddScreen(username, this);
     }
 
     public void SetTexture(Texture2D newTexture) {
