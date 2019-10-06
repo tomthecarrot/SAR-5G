@@ -20,6 +20,6 @@ public class Voxel : MonoBehaviour
     }
 
     private void OnExplored(string newValue) {
-        this.transform.GetChild(0).gameObject.SetActive(false);
+        this.transform.gameObject.SetActive(false);
     }
 }

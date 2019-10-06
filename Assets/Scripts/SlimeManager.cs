@@ -62,7 +62,11 @@ public class SlimeManager : MonoBehaviour
 
         // Update UI
         this.iAmGod = (newGod == Teleportal.Teleportal.tp.GetUsername());
-        GodIndicator.Shared.gameObject.SetActive(this.iAmGod);
+        GodModeUI.Shared.gameObject.SetActive(this.iAmGod);
+
+        if (GodIndicator.Shared != null) {
+            GodIndicator.Shared.gameObject.SetActive(this.iAmGod);
+        }
     }
 
     void Update() {
