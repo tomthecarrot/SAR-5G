@@ -503,6 +503,8 @@ MonoBehaviour:
     type: 3}
   environment: {fileID: 312608897}
   resolution: 20
+  voxelDeleteButton: {fileID: 0}
+  chunkButton: {fileID: 0}
 --- !u!4 &144159469
 Transform:
   m_ObjectHideFlags: 0
@@ -1264,6 +1266,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4339447141009292218, guid: 65c7896c4b429a94ea753421747fa5b6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 65c7896c4b429a94ea753421747fa5b6, type: 3}
 --- !u!1 &887827095
@@ -1476,15 +1483,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.17364816, y: 0, z: 0, w: 0.9848078}
-  m_LocalPosition: {x: 0, y: 25, z: -70}
+  m_LocalRotation: {x: 0.21521893, y: 0.67355835, z: -0.21521893, w: 0.67355835}
+  m_LocalPosition: {x: -184, y: 169, z: 127}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 129832493}
   - {fileID: 2033367592}
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 20, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 35.44, y: 90, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
   m_ObjectHideFlags: 0

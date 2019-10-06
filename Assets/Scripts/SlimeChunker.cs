@@ -27,6 +27,15 @@ public class SlimeChunker : MonoBehaviour
         singleton = this;
     }
 
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.Alpha2)) {
+            this.chunk();
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha3)) {
+            this.disableVoxels();
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,8 +45,8 @@ public class SlimeChunker : MonoBehaviour
             print("no renderer o.0");
         }
 
-        chunkButton.onClick.AddListener(() => chunk());
-        voxelDeleteButton.onClick.AddListener(() => disableVoxels());
+        // chunkButton.onClick.AddListener(() => chunk());
+        // voxelDeleteButton.onClick.AddListener(() => disableVoxels());
 
     }
 
