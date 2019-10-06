@@ -35,7 +35,6 @@ public class SlimeScreenCapture : MonoBehaviour {
     void Awake() {
         SlimeScreenCapture.Shared = this;
         this.camera = this.gameObject.GetComponent<Camera>();
-        this.scaledRect = new Rect(0, 0, 0.1f, 0.1f);
     }
 
     void Update() {
@@ -92,12 +91,10 @@ public class SlimeScreenCapture : MonoBehaviour {
             yield return new WaitForSeconds(this.NetworkInterval);
             
             if (!this.screenTxEnabled) {
-                Debug.Log("disabled :/");
                 continue;
             }
 
             yield return new WaitForEndOfFrame();
-            Debug.Log("end of frame reached");
             
             // Read screen image into render texture
             this.renderTexture = new RenderTexture(this.width, this.height, 0, RenderTextureFormat.ARGB32);
