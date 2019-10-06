@@ -79,10 +79,9 @@ public class SlimeManager : MonoBehaviour
         if (GodIndicator.Shared != null) {
             GodIndicator.Shared.gameObject.SetActive(this.iAmGod);
         }
-
-        //TODO
-        GodIndicator.Shared.gameObject.SetActive(this.iAmGod);
-        FirstResponderIndicator.Shared.gameObject.SetActive(!this.iAmGod);
+        if (FirstResponderIndicator.Shared != null) {
+            FirstResponderIndicator.Shared.gameObject.SetActive(!this.iAmGod);
+        }
     }
 
     public void OnFirstResponderClicked() {
