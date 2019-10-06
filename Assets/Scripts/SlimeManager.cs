@@ -24,18 +24,28 @@ public class SlimeManager : MonoBehaviour
         this.tpo.Subscribe("cam", delegate (string value) {
             string[] components = value.Split(':');
             string user = components[0];
-            string byteStr = components[1];
-            byte[] bytes = SlimeScreenCapture.StringToByteArray(byteStr);
-            Texture2D tex = new Texture2D(SlimeScreenCapture.Shared.width, SlimeScreenCapture.Shared.height, TextureFormat.DXT5, false);
-            tex.LoadRawTextureData(bytes);
-            tex.Apply();
-            if (screens.ContainsKey(user)) {
-                screens[user].SetTexture(tex);
-            } else {
-                Debug.Log("key lost!");
+            if (user == Teleportal.Teleportal.tp.GetUsername()) {
+                return;
             }
-            // viz.texture = tex;
+            string byteStr = components[1];
+            
+            StartCoroutine(ShowC(user, byteStr));
         });
+    }
+
+    private IEnumerator ShowC(string user, string byteStr) {
+        byte[] bytes = SlimeScreenCapture.StringToByteArray(byteStr);
+
+        yield return new WaitForEndOfFrame();
+        Texture2D tex = new Texture2D(SlimeScreenCapture.Shared.width, SlimeScreenCapture.Shared.height, TextureFormat.ARGB32, false);
+        tex.LoadRawTextureData(bytes);
+        tex.Apply();
+        if (screens.ContainsKey(user)) {
+            screens[user].SetTexture(tex);
+        } else {
+            Debug.Log("key lost!");
+        }
+        // viz.texture = tex;
     }
 
     public void AddScreen(string username, SlimeScreenRenderer screen) {

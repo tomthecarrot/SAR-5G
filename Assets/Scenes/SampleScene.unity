@@ -548,11 +548,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d92120de03a2e4816b8dd8ce5eb6beae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NetworkInterval: 0
-  width: 100
-  height: 100
-  divisions: 10
-  divisionInterval: 0.05
+  NetworkInterval: 0.25
+  width: 600
+  height: 800
+  divisions: 1
+  divisionInterval: 0
 --- !u!1 &1542169378
 GameObject:
   m_ObjectHideFlags: 0

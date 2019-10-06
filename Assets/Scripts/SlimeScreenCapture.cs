@@ -22,6 +22,8 @@ public class SlimeScreenCapture : MonoBehaviour {
     private RenderTexture renderTexture;
     private Texture2D t2d;
     private Rect rectRead;
+    private List<byte[]> byteArrs;
+    private int byteArrLen;
 
     void Awake() {
         SlimeScreenCapture.Shared = this;
@@ -33,6 +35,7 @@ public class SlimeScreenCapture : MonoBehaviour {
 
         int divWidth = this.width / divisions;
         int divHeight = this.height / divisions;
+        Debug.LogFormat("width: {0}, height: {1}", divWidth, divHeight);
 
         while (!Teleportal.Teleportal.tp.IsConnected() || !Teleportal.AuthModule.Shared.IsAuthed()) {
             // Wait for connection
@@ -49,34 +52,31 @@ public class SlimeScreenCapture : MonoBehaviour {
 
             RenderTexture.active = this.renderTexture;
 
-            List<byte[]> byteArrs = new List<byte[]>();
-            int byteArrLen = 0;
+            this.byteArrs = new List<byte[]>();
+            this.byteArrLen = 0;
 
             for (int i = 0; i < divisions; i++) {
                 yield return new WaitForEndOfFrame();
 
-                this.t2d = new Texture2D(this.width, this.height, TextureFormat.ARGB32, false);
-                this.rectRead = new Rect(divWidth * i, divHeight * i, divWidth, divHeight);
+                int x = divWidth * i;
+                int y = divHeight * i;
+                Debug.LogFormat("width_height {0} {1} x_y {2} {3}", width, height, x, y);
+                this.t2d = new Texture2D(divWidth, divHeight, TextureFormat.ARGB32, false);
+                this.rectRead = new Rect(x, y, divWidth, divHeight);
                 this.t2d.ReadPixels(this.rectRead, 0, 0);
-                this.t2d.Compress(false);
+                // this.t2d.Compress(false);
                 this.t2d.Apply();
 
                 byte[] tmp = t2d.GetRawTextureData<byte>().ToArray();
-                byteArrs.Add(tmp);
+                this.byteArrs.Add(tmp);
                 byteArrLen += tmp.Length;
                 yield return new WaitForSeconds(this.divisionInterval);
             }
 
-            byte[] ba = new byte[byteArrLen];
-            for (int i = 0; i < byteArrs.Count; i++) {
-                byte[] tmp = byteArrs[i];
-                for (int j = 0; j < tmp.Length; j++) {
-                    ba[i + j] = tmp[j];
-                }
-            }
+            RenderTexture.active = null;
 
             Thread t = new Thread(this.ByteArrayToString);
-            t.Start(ba);
+            t.Start(null);//ba);
             
             // Wait for the specified delay
             yield return new WaitForSeconds(this.NetworkInterval);
@@ -102,7 +102,15 @@ public class SlimeScreenCapture : MonoBehaviour {
     // HELPERS //
 
     public /*async Task<string>*/ void ByteArrayToString(object data) {
-        byte[] ba = (byte[]) data;
+        byte[] ba = new byte[this.byteArrLen];
+        for (int i = 0; i < this.byteArrs.Count; i++) {
+            byte[] tmp = this.byteArrs[i];
+            for (int j = 0; j < tmp.Length; j++) {
+                ba[i + j] = tmp[j];
+            }
+        }
+
+        // byte[] ba = (byte[]) data;
         StringBuilder hex = new StringBuilder(ba.Length * 2);
         Debug.Log(ba.Length);
         foreach (byte b in ba) {
