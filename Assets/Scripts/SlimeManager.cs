@@ -26,18 +26,24 @@ public class SlimeManager : MonoBehaviour
             string user = components[0];
             string byteStr = components[1];
             byte[] bytes = SlimeScreenCapture.StringToByteArray(byteStr);
-            Texture2D tex = new Texture2D(100, 100, TextureFormat.ARGB32, false);
+            Texture2D tex = new Texture2D(SlimeScreenCapture.Shared.width, SlimeScreenCapture.Shared.height, TextureFormat.DXT5, false);
             tex.LoadRawTextureData(bytes);
             tex.Apply();
             if (screens.ContainsKey(user)) {
                 screens[user].SetTexture(tex);
+            } else {
+                Debug.Log("key lost!");
             }
             // viz.texture = tex;
         });
     }
 
     public void AddScreen(string username, SlimeScreenRenderer screen) {
-        this.screens.Add(username, screen);
+        if (this.screens.ContainsKey(username)) {
+            this.screens[username] = screen;
+        } else {
+            this.screens.Add(username, screen);
+        }
     }
 
     private void OnSetGod(string newGod) {

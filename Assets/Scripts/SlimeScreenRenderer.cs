@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Rendering;
@@ -18,12 +19,18 @@ public class SlimeScreenRenderer : MonoBehaviour {
     }
 
     void Start() {
+        this.DelayThenAdd();
+    }
+
+    private async void DelayThenAdd() {
         TPUser tpu = this.transform.parent.parent.gameObject.GetComponent<TPUser>();
 
         if (tpu.isSelfUser) {
             Destroy(this.gameObject);
             return;
         }
+
+        await Task.Delay(2000);
 
         SlimeManager.Shared.AddScreen(tpu.GetUsername(), this);
     }
