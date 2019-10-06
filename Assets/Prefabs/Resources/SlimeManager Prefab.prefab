@@ -46,3 +46,6 @@ MonoBehaviour:
   VoxelTPO: {fileID: 4305596408726664225, guid: 2fc851f22b6e64eb49a16689f0319078,
     type: 3}
   GodUser: NULL
+  iAmGod: 0
+  FirstResponder: {fileID: 0}
+  IncidentCommand: {fileID: 0}

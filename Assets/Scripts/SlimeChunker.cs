@@ -46,11 +46,11 @@ public class SlimeChunker : MonoBehaviour
 
         Vector3 size = bound.size;
         edge_len = Mathf.Min(size.x, size.z) / (float)resolution;
-        print("\nEdge length for the voxels:");
-        print(edge_len);
+        // print("\nEdge length for the voxels:");
+        // print(edge_len);
         Vector3 start = bound.min;
-        print("\nSTART");
-        print(start);
+        // print("\nSTART");
+        // print(start);
 
         float currX = start.x;
         float currZ = start.z;
@@ -58,28 +58,28 @@ public class SlimeChunker : MonoBehaviour
 
         //TODO find out why it is only making an L smh
         while (currZ < maxZ) {
-            print("\nX..");
+            //print("\nX..");
             while (currX < maxX) {
                 spawnPositions.Add(new Vector3(currX, fulltimeY, currZ));
                 currX += edge_len;
-                print("CURR X:");
-                print(currX);
+                // print("CURR X:");
+                // print(currX);
             }
             // reset x:
             currX = start.x;
 
-            print("Z..");
+            //print("Z..");
             spawnPositions.Add(new Vector3(currX, fulltimeY, currZ));
             currZ += edge_len;
-            print("\nCURR Z:");
-            print(currZ);
+            // print("\nCURR Z:");
+            // print(currZ);
         }
-        print("\nEND- Bound max: ");
-        print(bound.max);
+        // print("\nEND- Bound max: ");
+        // print(bound.max);
 
-        print("\nLength of spawns: ");
-        print(spawnPositions.Count);
-        print(spawnPositions);
+        // print("\nLength of spawns: ");
+        // print(spawnPositions.Count);
+        // print(spawnPositions);
 
         foreach (Vector3 pos in spawnPositions) {
             Instantiate(this.voxelPrefab, pos, Quaternion.identity);

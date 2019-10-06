@@ -10,9 +10,12 @@ public class SlimeManager : MonoBehaviour
     public GameObject VoxelTPO;
     public string GodUser = "NULL";
     public bool iAmGod = false;
-    public TPObject tpo;
 
-    private Dictionary<string, SlimeScreenRenderer> screens;
+    public Button FirstResponder;
+    public Button IncidentCommand;
+
+
+    private TPObject tpo;
 
     void Awake() {
         SlimeManager.Shared = this;
@@ -22,6 +25,9 @@ public class SlimeManager : MonoBehaviour
     void Start() {
         this.tpo = TPObject.get(this.transform.parent.gameObject);
         this.tpo.Subscribe("god", this.OnSetGod);
+
+        IncidentCommand.onClick.AddListener(() => OnIncidentCommandClicked());
+        FirstResponder.onClick.AddListener(() => OnFirstResponderClicked());
         this.tpo.Subscribe("cam", delegate (string value) {
             string[] components = value.Split(':');
             string user = components[0];
@@ -66,15 +72,30 @@ public class SlimeManager : MonoBehaviour
 
         // Update UI
         this.iAmGod = (newGod == Teleportal.Teleportal.tp.GetUsername());
+
         GodModeUI.Shared.gameObject.SetActive(this.iAmGod);
         SlugModeUI.Shared.gameObject.SetActive(!this.iAmGod);
 
         if (GodIndicator.Shared != null) {
             GodIndicator.Shared.gameObject.SetActive(this.iAmGod);
         }
+
+        //TODO
+        GodIndicator.Shared.gameObject.SetActive(this.iAmGod);
+        FirstResponderIndicator.Shared.gameObject.SetActive(!this.iAmGod);
+    }
+
+    public void OnFirstResponderClicked() {
+        print("OFRSSPND");
+    }
+
+    void OnIncidentCommandClicked() {
+        print("INCIDENTCOMD");
+        this.ToggleGod();
     }
 
     void Update() {
+        // still here..
         if (Input.GetKeyDown(KeyCode.G)) {
             this.ToggleGod();
         }
@@ -98,6 +119,6 @@ public class SlimeManager : MonoBehaviour
             newGod = "NULL";
         }
 
-        this.tpo.SetState("god", newGod);
+        this.tpo.SetState("god", newGod); //this fires of the onsetgod callback in here
     }
 }
