@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 using Teleportal;
 
 public class SlimeManager : MonoBehaviour
@@ -9,6 +11,11 @@ public class SlimeManager : MonoBehaviour
     public GameObject VoxelTPO;
     public string GodUser = "NULL";
     public bool iAmGod = false;
+    
+    public Button FirstResponder;
+    public Button IncidentCommand;
+
+
     private TPObject tpo;
 
     void Awake() {
@@ -18,6 +25,9 @@ public class SlimeManager : MonoBehaviour
     void Start() {
         this.tpo = TPObject.get(this.transform.parent.gameObject);
         this.tpo.Subscribe("god", this.OnSetGod);
+
+        IncidentCommand.onClick.AddListener(() => OnIncidentCommandClicked());
+        FirstResponder.onClick.AddListener(() => OnFirstResponderClicked());
     }
 
     private void OnSetGod(string newGod) {
@@ -26,10 +36,23 @@ public class SlimeManager : MonoBehaviour
 
         // Update UI
         this.iAmGod = (newGod == Teleportal.Teleportal.tp.GetUsername());
+        
+        //TODO
         GodIndicator.Shared.gameObject.SetActive(this.iAmGod);
+        FirstResponderIndicator.Shared.gameObject.SetActive(!this.iAmGod);
+    }
+
+    public void OnFirstResponderClicked() {
+        print("OFRSSPND");
+    }
+
+    void OnIncidentCommandClicked() {
+        print("INCIDENTCOMD");
+        this.ToggleGod();
     }
 
     void Update() {
+        // still here..
         if (Input.GetKeyDown(KeyCode.G)) {
             this.ToggleGod();
         }
@@ -53,6 +76,6 @@ public class SlimeManager : MonoBehaviour
             newGod = "NULL";
         }
 
-        this.tpo.SetState("god", newGod);
+        this.tpo.SetState("god", newGod); //this fires of the onsetgod callback in here
     }
 }
