@@ -14,8 +14,8 @@ public class SlimeManager : MonoBehaviour
     public Button FirstResponder;
     public Button IncidentCommand;
 
-
-    private TPObject tpo;
+    private Dictionary<string, SlimeScreenRenderer> screens;
+    public TPObject tpo;
 
     void Awake() {
         SlimeManager.Shared = this;
