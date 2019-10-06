@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Teleportal;
 
 public class SlimeChunker : MonoBehaviour
@@ -10,6 +11,9 @@ public class SlimeChunker : MonoBehaviour
     public GameObject voxelPrefab;
     public GameObject environment;
     public int resolution;
+
+    public Button voxelDeleteButton;
+    public Button chunkButton;
 
     private Bounds bound;
     private float edge_len;
@@ -31,6 +35,10 @@ public class SlimeChunker : MonoBehaviour
         } else {
             print("no renderer o.0");
         }
+
+        chunkButton.onClick.AddListener(() => chunk());
+        voxelDeleteButton.onClick.AddListener(() => disableVoxels());
+
     }
 
     public void OnDrawGizmos() 
@@ -51,6 +59,8 @@ public class SlimeChunker : MonoBehaviour
 
     public void chunk()
     {
+        print("chunking");
+
         float maxZ = bound.max.z;
         float maxX = bound.max.x; 
 
@@ -95,6 +105,13 @@ public class SlimeChunker : MonoBehaviour
             GameObject go = Instantiate(this.voxelPrefab, pos, Quaternion.identity);
             TPObject tpo = TPObject.get(go);
             this.spawnVoxels.Add(tpo);
+        }
+    }
+
+    public void disableVoxels(){
+        print("disabling voxels");
+        foreach (TPObject tpo in this.spawnVoxels){
+            tpo.Delete();
         }
     }
 
