@@ -16,7 +16,7 @@ public class SlimeRaycaster : MonoBehaviour
         Transform t = TPUser.SelfUser.transform;
         if (Physics.Raycast(t.position, transform.TransformDirection(t.forward), out hit, this.RaycastDistance)) {
             Debug.Log(hit.transform.gameObject.name);
-            if (hit.transform.gameObject.name == "Voxel Cube") {
+            if (hit.transform.gameObject.name == "Occluder") {
                 Voxel v = hit.transform.gameObject.GetComponent<Voxel>();
                 v.Explore();
             }

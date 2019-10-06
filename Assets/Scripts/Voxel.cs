@@ -6,12 +6,6 @@ using Teleportal;
 public class Voxel : MonoBehaviour
 {
     private TPObject tpo;
-    private MeshRenderer renderer;
-
-    void Awake() {
-        this.renderer = this.GetComponent<MeshRenderer>();
-        this.renderer.enabled = false;
-    }
 
     void Start() {
         this.tpo = TPObject.get(this.transform.parent.gameObject);
@@ -26,6 +20,6 @@ public class Voxel : MonoBehaviour
     }
 
     private void OnExplored(string newValue) {
-        this.renderer.enabled = true;
+        this.transform.GetChild(0).gameObject.SetActive(false);
     }
 }
