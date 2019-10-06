@@ -114,11 +114,22 @@ public class SlimeManager : MonoBehaviour
     }
 
     public void ToggleGod() {
+        this.StartCoroutine(this.ToggleGodC());
+    }
+
+    private IEnumerator ToggleGodC() {
+        // Wait for authentication first
+        while (!Teleportal.AuthModule.Shared.IsAuthed()) {
+            yield return new WaitForSeconds(0.1f);
+        }
+
         string newGod = Teleportal.Teleportal.tp.GetUsername();
         if (this.iAmGod) {
             newGod = "NULL";
         }
 
         this.tpo.SetState("god", newGod); //this fires of the onsetgod callback in here
+
+        yield return null;
     }
 }

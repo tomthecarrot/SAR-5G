@@ -14,6 +14,7 @@ public class SlimeChunker : MonoBehaviour
     private Bounds bound;
     private float edge_len;
     private List<Vector3> spawnPositions = new List<Vector3>();
+    private List<TPObject> spawnVoxels = new List<TPObject>();
 
     private Color debug_color;
     private Vector3 debug_pos;
@@ -30,7 +31,6 @@ public class SlimeChunker : MonoBehaviour
         } else {
             print("no renderer o.0");
         }
-        chunk();
     }
 
     public void OnDrawGizmos() 
@@ -39,7 +39,17 @@ public class SlimeChunker : MonoBehaviour
         Gizmos.DrawSphere(debug_pos, 1);
     }
 
-    void chunk()
+    public void reset() {
+        foreach (TPObject tpo in this.spawnVoxels) {
+            if (tpo == null) {
+                continue;
+            }
+            
+            tpo.Delete();
+        }
+    }
+
+    public void chunk()
     {
         float maxZ = bound.max.z;
         float maxX = bound.max.x; 
@@ -82,7 +92,9 @@ public class SlimeChunker : MonoBehaviour
         // print(spawnPositions);
 
         foreach (Vector3 pos in spawnPositions) {
-            Instantiate(this.voxelPrefab, pos, Quaternion.identity);
+            GameObject go = Instantiate(this.voxelPrefab, pos, Quaternion.identity);
+            TPObject tpo = TPObject.get(go);
+            this.spawnVoxels.Add(tpo);
         }
     }
 
