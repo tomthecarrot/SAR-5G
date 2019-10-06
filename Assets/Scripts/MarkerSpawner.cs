@@ -6,7 +6,7 @@ using Teleportal;
 
 public class MarkerSpawner : MonoBehaviour {
 
-    public GameObject TPOprefab;
+    public GameObject MarkerTpoPrefab;
 
     public void ButtonSelected(int index) {
         string prefabName;
@@ -16,17 +16,17 @@ public class MarkerSpawner : MonoBehaviour {
                 prefabName = "victim_marker";
                 break;
             case 1: // hazard
-                prefabName = "hazard_marker";
+                prefabName = "caution_marker";
                 break;
             case 2: // landmark
-                prefabName = "caution_marker";
+                prefabName = "landmark_marker";
                 break;
             default:
                 prefabName = "victim_marker";
                 break;
         }
 
-        GameObject markerGO = Instantiate(this.TPOprefab);
+        GameObject markerGO = Instantiate(this.MarkerTpoPrefab);
         TPObject markerTPO = TPObject.get(markerGO);
         markerTPO.OnInit += delegate {
             Transform t = TPUser.SelfUser.transform;
@@ -34,7 +34,7 @@ public class MarkerSpawner : MonoBehaviour {
             Vector3 ang = t.eulerAngles;
             // pos.z += 1;
             markerTPO.transform.position = pos;
-            markerTPO.transform.eulerAngles = ang;
+            // markerTPO.transform.eulerAngles = ang;
 
             // set marker prefab renderer
             markerTPO.SetState("prefab", prefabName);

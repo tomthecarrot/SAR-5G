@@ -328,6 +328,20 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 972424672, guid: cc294e6ca974110488ec464b8ff70490, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 972424674, guid: cc294e6ca974110488ec464b8ff70490, type: 3}
+      propertyPath: TPOprefab
+      value: 
+      objectReference: {fileID: 2995579603777723961, guid: 51a9db15233e149d18e92049cfd28b83,
+        type: 3}
+    - target: {fileID: 972424674, guid: cc294e6ca974110488ec464b8ff70490, type: 3}
+      propertyPath: MarkerTpoPrefab
+      value: 
+      objectReference: {fileID: 2995579603777723961, guid: 51a9db15233e149d18e92049cfd28b83,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc294e6ca974110488ec464b8ff70490, type: 3}
 --- !u!1001 &874439718
